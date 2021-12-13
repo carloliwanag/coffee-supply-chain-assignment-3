@@ -386,7 +386,7 @@ contract('SupplyChain', function (accounts) {
   it('Testing smart contract function receiveItem() that allows a retailer to mark coffee received', async () => {
     const supplyChain = await SupplyChain.deployed();
 
-    // add retailer address to list of farmers
+    // add retailer address to list of retailers
     await supplyChain.addRetailer(retailerID);
 
     // Declare and Initialize a variable for event
@@ -436,19 +436,54 @@ contract('SupplyChain', function (accounts) {
   });
 
   // 8th Test
-  xit('Testing smart contract function purchaseItem() that allows a consumer to purchase coffee', async () => {
+  it('Testing smart contract function purchaseItem() that allows a consumer to purchase coffee', async () => {
     const supplyChain = await SupplyChain.deployed();
 
+    // add consumer address to list of consumers
+    await supplyChain.addConsumer(consumerID);
+
     // Declare and Initialize a variable for event
+    let eventEmitted = false;
 
     // Watch the emitted event Purchased()
 
-    // Mark an item as Sold by calling function buyItem()
+    // Mark an item as Sold by calling function purchaseItem()
+    const tx = await supplyChain.purchaseItem(upc, { from: consumerID });
+
+    const { logs } = tx;
+
+    assert.ok(Array.isArray(logs));
+    assert.equal(logs.length, 1);
+
+    const log = logs[0];
+
+    if (log.event) {
+      eventEmitted = true;
+    }
+
+    assert.equal('Purchased', log.event);
+
+    truffleAssert.eventEmitted(tx, 'Purchased');
 
     // Retrieve the just now saved item from blockchain by calling function fetchItem()
+    const resultBufferOne = await supplyChain.fetchItemBufferOne.call(upc);
+    const resultBufferTwo = await supplyChain.fetchItemBufferTwo.call(upc);
 
     // Verify the result set
-    assert.equal(1, 1);
+    assert.equal(
+      resultBufferOne[2],
+      consumerID,
+      'Error: Missing or Invalid ownerID'
+    );
+
+    assert.equal(
+      resultBufferTwo[8],
+      consumerID,
+      'Error: Missing or Invalid ownerID'
+    );
+
+    assert.equal(resultBufferTwo[5], 7, 'Error: Invalid item State');
+    assert.equal(eventEmitted, true, 'Invalid event emitted');
   });
 
   // 9th Test
