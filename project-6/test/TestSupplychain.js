@@ -14,7 +14,7 @@ contract('SupplyChain', function (accounts) {
   const originFarmInformation = 'Yarray Valley';
   const originFarmLatitude = '-38.239770';
   const originFarmLongitude = '144.341490';
-  var productID = sku + upc;
+  var productID = sku + '-' + upc;
   const productNotes = 'Best beans for Espresso';
   const productPrice = web3.utils.toWei('1', 'ether');
   var itemState = 7; // Purchased State
@@ -546,12 +546,11 @@ contract('SupplyChain', function (accounts) {
     assert.equal(resultBufferTwo[0], sku, 'Error: Missing or Invalid SKU');
     assert.equal(resultBufferTwo[1], upc, 'Error: Missing or Invalid UPC');
 
-    // TODO
-    // assert.equal(
-    //   resultBufferTwo[2],
-    //   productID,
-    //   'Error: Missing or Invalid Product ID'
-    // );
+    assert.equal(
+      resultBufferTwo[2],
+      productID,
+      'Error: Missing or Invalid Product ID'
+    );
 
     assert.equal(
       resultBufferTwo[3],
