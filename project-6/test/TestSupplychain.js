@@ -161,7 +161,7 @@ contract('SupplyChain', function (accounts) {
 
     assert.equal('Processed', log.event);
 
-    truffleAssert.eventEmitted(tx, 'Harvested');
+    truffleAssert.eventEmitted(tx, 'Processed');
 
     // Retrieve the just now saved item from blockchain by calling function fetchItem()
     const resultBufferOne = await supplyChain.fetchItemBufferOne.call(upc);
@@ -182,19 +182,51 @@ contract('SupplyChain', function (accounts) {
   });
 
   // 3rd Test
-  xit('Testing smart contract function packItem() that allows a farmer to pack coffee', async () => {
+  it('Testing smart contract function packItem() that allows a farmer to pack coffee', async () => {
     const supplyChain = await SupplyChain.deployed();
 
     // Declare and Initialize a variable for event
+    let eventEmitted = false;
 
     // Watch the emitted event Packed()
 
     // Mark an item as Packed by calling function packItem()
+    const tx = await supplyChain.packItem(upc, {
+      from: accounts[1],
+    });
+
+    // Retrieve the events information from the transaction
+    const { logs } = tx;
+
+    assert.ok(Array.isArray(logs));
+    assert.equal(logs.length, 1);
+
+    const log = logs[0];
+
+    if (log.event) {
+      eventEmitted = true;
+    }
+
+    assert.equal('Packed', log.event);
+
+    truffleAssert.eventEmitted(tx, 'Packed');
 
     // Retrieve the just now saved item from blockchain by calling function fetchItem()
+    const resultBufferOne = await supplyChain.fetchItemBufferOne.call(upc);
+    const resultBufferTwo = await supplyChain.fetchItemBufferTwo.call(upc);
 
     // Verify the result set
-    assert.equal(1, 1);
+    assert.equal(resultBufferOne[0], sku, 'Error: Invalid item SKU');
+    assert.equal(resultBufferOne[1], upc, 'Error: Invalid item UPC');
+
+    assert.equal(
+      resultBufferOne[2],
+      originFarmerID,
+      'Error: Missing or Invalid ownerID'
+    );
+
+    assert.equal(resultBufferTwo[5], 2, 'Error: Invalid item State');
+    assert.equal(eventEmitted, true, 'Invalid event emitted');
   });
 
   // 4th Test
