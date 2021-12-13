@@ -18,9 +18,10 @@
 ## Installed libraries
 
 - Truffle Assertions (https://www.npmjs.com/package/truffle-assertions)
-For event checking
+For event checking in the unit tests
 
-
+- OpenZeppelin Contracts (https://www.npmjs.com/package/@openzeppelin/contracts)
+For the specific use of converting uint256 to String using the utility import "../../node_modules/@openzeppelin/contracts/utils/Strings.sol";
 
 This repository containts an Ethereum DApp that demonstrates a Supply Chain flow between a Seller and Buyer. The user story is similar to any commonly used supply chain process. A Seller can add items to the inventory system stored in the blockchain. A Buyer can purchase such items from the inventory system. Additionally a Seller can mark an item as Shipped, and similarly a Buyer can mark an item as Received.
 
