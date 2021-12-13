@@ -1,1 +1,1 @@
-ganache-cli -m "spirit supply whale amount human item harsh scare congress discover talent hamster"
+ganache-cli -m "spirit supply whale amount human item harsh scare congress discover talent hamster" -p 7545

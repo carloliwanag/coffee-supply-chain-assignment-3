@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+import "../../node_modules/@openzeppelin/contracts/utils/Strings.sol";
+
 import "../coffeecore/Ownable.sol";
 import "../coffeeaccesscontrol/FarmerRole.sol";
 import "../coffeeaccesscontrol/DistributorRole.sol";
@@ -52,7 +54,7 @@ contract SupplyChain is
         string originFarmInformation; // Farmer Information
         string originFarmLatitude; // Farm Latitude
         string originFarmLongitude; // Farm Longitude
-        uint256 productID; // Product ID potentially a combination of upc + sku
+        string productID; // Product ID potentially a combination of upc + sku
         string productNotes; // Product Notes
         uint256 productPrice; // Product Price
         State itemState; // Product State as represented in the enum above
@@ -183,6 +185,15 @@ contract SupplyChain is
         newItem.productNotes = _productNotes;
         newItem.itemState = defaultState;
         newItem.isValue = true;
+
+        // handle concat
+        string memory upcStr = Strings.toString(_upc);
+        string memory skuStr = Strings.toString(sku);
+
+        string memory productId = string(abi.encodePacked(skuStr, "-", upcStr));
+
+        newItem.productID = productId;
+
         items[_upc] = newItem;
 
         // Increment sku
@@ -373,7 +384,7 @@ contract SupplyChain is
         returns (
             uint256 itemSKU,
             uint256 itemUPC,
-            uint256 productID,
+            string memory productID,
             string memory productNotes,
             uint256 productPrice,
             uint256 itemState,
