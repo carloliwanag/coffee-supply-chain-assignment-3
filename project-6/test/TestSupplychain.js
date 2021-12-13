@@ -284,20 +284,52 @@ contract('SupplyChain', function (accounts) {
   });
 
   // 5th Test
-  xit('Testing smart contract function buyItem() that allows a distributor to buy coffee', async () => {
+  it('Testing smart contract function buyItem() that allows a distributor to buy coffee', async () => {
     const supplyChain = await SupplyChain.deployed();
 
+    // add distributor address to list of farmers
+    await supplyChain.addDistributor(distributorID);
+
     // Declare and Initialize a variable for event
+    let eventEmitted = false;
 
     // Watch the emitted event Sold()
-    var event = supplyChain.Sold();
+    // var event = supplyChain.Sold();
 
     // Mark an item as Sold by calling function buyItem()
+    const tx = await supplyChain.buyItem(upc, {
+      from: distributorID,
+      value: web3.utils.toWei('1', 'ether'),
+    });
+
+    const { logs } = tx;
+
+    assert.ok(Array.isArray(logs));
+    assert.equal(logs.length, 1);
+
+    const log = logs[0];
+
+    if (log.event) {
+      eventEmitted = true;
+    }
+
+    assert.equal('Sold', log.event);
+
+    truffleAssert.eventEmitted(tx, 'Sold');
 
     // Retrieve the just now saved item from blockchain by calling function fetchItem()
+    const resultBufferOne = await supplyChain.fetchItemBufferOne.call(upc);
+    const resultBufferTwo = await supplyChain.fetchItemBufferTwo.call(upc);
 
     // Verify the result set
-    assert.equal(1, 1);
+    assert.equal(
+      resultBufferOne[2],
+      distributorID,
+      'Error: Missing or Invalid ownerID'
+    );
+
+    assert.equal(resultBufferTwo[5], 4, 'Error: Invalid item State');
+    assert.equal(eventEmitted, true, 'Invalid event emitted');
   });
 
   // 6th Test
