@@ -328,6 +328,12 @@ contract('SupplyChain', function (accounts) {
       'Error: Missing or Invalid ownerID'
     );
 
+    assert.equal(
+      resultBufferTwo[6],
+      distributorID,
+      'Error: Missing or Invalid ownerID'
+    );
+
     assert.equal(resultBufferTwo[5], 4, 'Error: Invalid item State');
     assert.equal(eventEmitted, true, 'Invalid event emitted');
   });
@@ -377,19 +383,56 @@ contract('SupplyChain', function (accounts) {
   });
 
   // 7th Test
-  xit('Testing smart contract function receiveItem() that allows a retailer to mark coffee received', async () => {
+  it('Testing smart contract function receiveItem() that allows a retailer to mark coffee received', async () => {
     const supplyChain = await SupplyChain.deployed();
 
+    // add retailer address to list of farmers
+    await supplyChain.addRetailer(retailerID);
+
     // Declare and Initialize a variable for event
+    let eventEmitted = false;
 
     // Watch the emitted event Received()
 
     // Mark an item as Sold by calling function buyItem()
+    const tx = await supplyChain.receiveItem(upc, {
+      from: retailerID,
+    });
+
+    const { logs } = tx;
+
+    assert.ok(Array.isArray(logs));
+    assert.equal(logs.length, 1);
+
+    const log = logs[0];
+
+    if (log.event) {
+      eventEmitted = true;
+    }
+
+    assert.equal('Received', log.event);
+
+    truffleAssert.eventEmitted(tx, 'Received');
 
     // Retrieve the just now saved item from blockchain by calling function fetchItem()
+    const resultBufferOne = await supplyChain.fetchItemBufferOne.call(upc);
+    const resultBufferTwo = await supplyChain.fetchItemBufferTwo.call(upc);
 
     // Verify the result set
-    assert.equal(1, 1);
+    assert.equal(
+      resultBufferOne[2],
+      retailerID,
+      'Error: Missing or Invalid ownerID'
+    );
+
+    assert.equal(
+      resultBufferTwo[7],
+      retailerID,
+      'Error: Missing or Invalid ownerID'
+    );
+
+    assert.equal(resultBufferTwo[5], 6, 'Error: Invalid item State');
+    assert.equal(eventEmitted, true, 'Invalid event emitted');
   });
 
   // 8th Test
