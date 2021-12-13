@@ -17,7 +17,7 @@ contract('SupplyChain', function (accounts) {
   var productID = sku + upc;
   const productNotes = 'Best beans for Espresso';
   const productPrice = web3.utils.toWei('1', 'ether');
-  var itemState = 0;
+  var itemState = 7; // Purchased State
   const distributorID = accounts[2];
   const retailerID = accounts[3];
   const consumerID = accounts[4];
@@ -487,22 +487,94 @@ contract('SupplyChain', function (accounts) {
   });
 
   // 9th Test
-  xit('Testing smart contract function fetchItemBufferOne() that allows anyone to fetch item details from blockchain', async () => {
+  it('Testing smart contract function fetchItemBufferOne() that allows anyone to fetch item details from blockchain', async () => {
     const supplyChain = await SupplyChain.deployed();
 
     // Retrieve the just now saved item from blockchain by calling function fetchItem()
+    const resultBufferOne = await supplyChain.fetchItemBufferOne.call(upc);
 
     // Verify the result set:
-    assert.equal(1, 1);
+    assert.equal(resultBufferOne[0], sku, 'Error: Missing or Invalid SKU');
+    assert.equal(resultBufferOne[1], upc, 'Error: Missing or Invalid UPC');
+    assert.equal(
+      resultBufferOne[2],
+      consumerID,
+      'Error: Missing or Invalid OwnerID'
+    );
+    assert.equal(
+      resultBufferOne[3],
+      originFarmerID,
+      'Error: Missing or Invalid Origin Farmer ID'
+    );
+    assert.equal(
+      resultBufferOne[4],
+      originFarmName,
+      'Error: Missing or Invalid Origin Farm Name'
+    );
+    assert.equal(
+      resultBufferOne[5],
+      originFarmInformation,
+      'Error: Missing or Invalid Origin Farm Info'
+    );
+    assert.equal(
+      resultBufferOne[6],
+      originFarmLatitude,
+      'Error: Missing or Invalid Origin Farm Lat'
+    );
+    assert.equal(
+      resultBufferOne[7],
+      originFarmLongitude,
+      'Error: Missing or Invalid Origin Farm Lng'
+    );
   });
 
   // 10th Test
-  xit('Testing smart contract function fetchItemBufferTwo() that allows anyone to fetch item details from blockchain', async () => {
+  it('Testing smart contract function fetchItemBufferTwo() that allows anyone to fetch item details from blockchain', async () => {
     const supplyChain = await SupplyChain.deployed();
 
     // Retrieve the just now saved item from blockchain by calling function fetchItem()
+    const resultBufferTwo = await supplyChain.fetchItemBufferTwo.call(upc);
 
     // Verify the result set:
-    assert.equal(1, 1);
+    assert.equal(resultBufferTwo[0], sku, 'Error: Missing or Invalid SKU');
+    assert.equal(resultBufferTwo[1], upc, 'Error: Missing or Invalid UPC');
+
+    // TODO
+    // assert.equal(
+    //   resultBufferTwo[2],
+    //   productID,
+    //   'Error: Missing or Invalid Product ID'
+    // );
+
+    assert.equal(
+      resultBufferTwo[3],
+      productNotes,
+      'Error: Missing or Invalid Product Notes'
+    );
+    assert.equal(
+      resultBufferTwo[4],
+      productPrice,
+      'Error: Missing or Invalid Product Price'
+    );
+    assert.equal(
+      resultBufferTwo[5],
+      itemState,
+      'Error: Missing or Invalid Item State'
+    );
+    assert.equal(
+      resultBufferTwo[6],
+      distributorID,
+      'Error: Missing or Invalid Distributor ID'
+    );
+    assert.equal(
+      resultBufferTwo[7],
+      retailerID,
+      'Error: Missing or Invalid Retailer ID'
+    );
+    assert.equal(
+      resultBufferTwo[8],
+      consumerID,
+      'Error: Missing or Invalid ownerID'
+    );
   });
 });
