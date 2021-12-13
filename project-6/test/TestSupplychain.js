@@ -161,6 +161,7 @@ contract('SupplyChain', function (accounts) {
 
     assert.equal('Processed', log.event);
 
+    // use truffle assert to test events
     truffleAssert.eventEmitted(tx, 'Processed');
 
     // Retrieve the just now saved item from blockchain by calling function fetchItem()
@@ -209,6 +210,7 @@ contract('SupplyChain', function (accounts) {
 
     assert.equal('Packed', log.event);
 
+    // use truffle assert to test events
     truffleAssert.eventEmitted(tx, 'Packed');
 
     // Retrieve the just now saved item from blockchain by calling function fetchItem()
@@ -257,6 +259,7 @@ contract('SupplyChain', function (accounts) {
 
     assert.equal('ForSale', log.event);
 
+    // use truffle assert to test events
     truffleAssert.eventEmitted(tx, 'ForSale');
 
     // Retrieve the just now saved item from blockchain by calling function fetchItem()
@@ -287,7 +290,7 @@ contract('SupplyChain', function (accounts) {
   it('Testing smart contract function buyItem() that allows a distributor to buy coffee', async () => {
     const supplyChain = await SupplyChain.deployed();
 
-    // add distributor address to list of farmers
+    // add distributor address to list of distributors
     await supplyChain.addDistributor(distributorID);
 
     // Declare and Initialize a variable for event
@@ -315,6 +318,7 @@ contract('SupplyChain', function (accounts) {
 
     assert.equal('Sold', log.event);
 
+    // use truffle assert to test events
     truffleAssert.eventEmitted(tx, 'Sold');
 
     // Retrieve the just now saved item from blockchain by calling function fetchItem()
@@ -365,6 +369,7 @@ contract('SupplyChain', function (accounts) {
 
     assert.equal('Shipped', log.event);
 
+    // use truffle assert to test events
     truffleAssert.eventEmitted(tx, 'Shipped');
 
     // Retrieve the just now saved item from blockchain by calling function fetchItem()
@@ -412,6 +417,7 @@ contract('SupplyChain', function (accounts) {
 
     assert.equal('Received', log.event);
 
+    // use truffle assert to test events
     truffleAssert.eventEmitted(tx, 'Received');
 
     // Retrieve the just now saved item from blockchain by calling function fetchItem()
@@ -463,6 +469,7 @@ contract('SupplyChain', function (accounts) {
 
     assert.equal('Purchased', log.event);
 
+    // use truffle assert to test events
     truffleAssert.eventEmitted(tx, 'Purchased');
 
     // Retrieve the just now saved item from blockchain by calling function fetchItem()
