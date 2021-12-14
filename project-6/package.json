@@ -16,6 +16,8 @@
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.4.0",
-    "@truffle/hdwallet-provider": "^1.6.0"
+    "@truffle/contract": "^4.4.0",
+    "@truffle/hdwallet-provider": "^1.6.0",
+    "web3": "^1.6.1"
   }
 }
