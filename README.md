@@ -26,8 +26,12 @@ For the specific use of converting uint256 to String using the utility import ".
 - Truffle HDWallet Provider (https://www.npmjs.com/package/@truffle/hdwallet-provider)
 For deploying the rinkeby using mnemonic
 
-- Web3 and Truffle Contract
-For updating the library used in the frontend (Though installed using NPM, I used CDN as no Webpack was used to build the app )
+- Truffle Contract (4.4.0)
+For updating the library used in the frontend 
+
+- node v.14.17.5
+- truffle v.5.4.21
+- web3 (latest version https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js) 
 
 ## Rinkeby Contract Addresses
 
