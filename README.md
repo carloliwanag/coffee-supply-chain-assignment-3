@@ -23,6 +23,29 @@ For event checking in the unit tests
 - OpenZeppelin Contracts (https://www.npmjs.com/package/@openzeppelin/contracts)
 For the specific use of converting uint256 to String using the utility import "../../node_modules/@openzeppelin/contracts/utils/Strings.sol";
 
+- Truffle HDWallet Provider (https://www.npmjs.com/package/@truffle/hdwallet-provider)
+For deploying the rinkeby using mnemonic
+
+## Rinkeby Contract Addresses
+
+### FarmerRole
+https://rinkeby.etherscan.io/address/0xc305Ba0000CC5cFcb76D61dD193bbF8CFBa92684
+
+### DistributorRole
+https://rinkeby.etherscan.io/address/0xfb6947fcc4a4b6e4daf552a91ecc78bc14dd4d22
+
+### RetailerRole
+https://rinkeby.etherscan.io/address/0x1491973c7e16eb124f3cb89a3b8e7518014a1566
+
+### ConsumerRole
+https://rinkeby.etherscan.io/address/0x958b574bb60c9862d147789526de87d6d08759f0
+
+### SupplyChain
+https://rinkeby.etherscan.io/address/0x5131a917bc23b23c9a9db941c50d66ba47fb549f
+
+
+
+
 This repository containts an Ethereum DApp that demonstrates a Supply Chain flow between a Seller and Buyer. The user story is similar to any commonly used supply chain process. A Seller can add items to the inventory system stored in the blockchain. A Buyer can purchase such items from the inventory system. Additionally a Seller can mark an item as Shipped, and similarly a Buyer can mark an item as Received.
 
 The DApp User Interface when running should look like...
