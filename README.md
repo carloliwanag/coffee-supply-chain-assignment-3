@@ -15,7 +15,7 @@
 ![Activity Diagram](images/uml/data_model_diagram.drawio.png)
 
 
-## Installed libraries
+## Built With
 
 - Truffle Assertions (https://www.npmjs.com/package/truffle-assertions)
 For event checking in the unit tests
@@ -31,7 +31,7 @@ For updating the library used in the frontend. This is for the creation of the s
 
 - node v.14.17.5 Is not actually required but is needed for the NPM. 
 
-- truffle v.5.4.21
+- Truffle Framework v.5.4.21
   Used for setting up the overall development workflow from compiling, testing and deployment of smart contracts. This also allowed me to develop locally by using Ganache.
 
 
@@ -171,18 +171,6 @@ In a separate terminal window, launch the DApp:
 ```
 npm run dev
 ```
-
-## Built With
-
-* [Ethereum](https://www.ethereum.org/) - Ethereum is a decentralized platform that runs smart contracts
-* [IPFS](https://ipfs.io/) - IPFS is the Distributed Web | A peer-to-peer hypermedia protocol
-to make the web faster, safer, and more open.
-* [Truffle Framework](http://truffleframework.com/) - Truffle is the most popular development framework for Ethereum with a mission to make your life a whole lot easier.
-
-
-## Authors
-
-See also the list of [contributors](https://github.com/your/project/contributors.md) who participated in this project.
 
 ## Acknowledgments
 
